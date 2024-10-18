@@ -4,7 +4,7 @@ import { set_sidebar } from '../utils/auto_sidebar.mjs'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
 
-  base: "/docs/" ,
+  // base: "/docs/" ,
 
   // 地址栏logo
   head :[["link",{rel: "icon", href: "/docs/logo.svg"}]],
