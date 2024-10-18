@@ -7,7 +7,7 @@ export default defineConfig({
   // base: "/docs/" ,
 
   // 地址栏logo
-  head :[["link",{rel: "icon", href: "/docs/logo.svg"}]],
+  head :[["link",{rel: "icon", href: "/logo.svg"}]],
 
   // 主页小标题
   title: "陳序源个人文档库",
@@ -17,7 +17,7 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     // logo 配置
-    logo: '/public/logo.svg',
+    logo: '/logo.svg',
     // 导航栏配置
     nav: [
       // 无下拉框
