@@ -31,7 +31,10 @@ export default defineConfig({
       { text: '后端', items:[
         { text: 'Java核心语法', link: '/backend/java_basic'},
         { text: 'MySQL', link: '/backend/mysql'},
-      ]}
+      ]},
+      { text: '图书', items:[
+        { text: '《图解TCP/IP》', link: '/book/图解TCP_IP'},
+      ]},
     ],
 
     // 右侧导航栏设置
@@ -65,6 +68,7 @@ export default defineConfig({
     sidebar: { 
       "/backend/java_basic": set_sidebar("/backend/java_basic"), 
       "/backend/mysql": set_sidebar("/backend/mysql"), 
+      "/book/图解TCP_IP": set_sidebar("/book/图解TCP_IP"), 
     },
 
 

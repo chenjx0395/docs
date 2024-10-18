@@ -31,9 +31,12 @@ features:
   - title: 星星交友
     # 文本域描述
     details: 致力于打造以兴趣和目标为驱动的交友平台
+    link: https://www.baidu.com
   - title: 彗星AI刷题平台
     details: 智慧化刷题造题平台，为创造减负
+    link: https://www.baidu.com
   - title: 恒星API调度平台
     details: 提供高性能的API调用服务
+    link: https://www.baidu.com
 ---
 
