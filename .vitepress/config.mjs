@@ -4,8 +4,10 @@ import { set_sidebar } from '../utils/auto_sidebar.mjs'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
 
+  base: "/docs/" ,
+
   // 地址栏logo
-  head :[["link",{rel: "icon", href: "/public/logo.svg"}]],
+  head :[["link",{rel: "icon", href: "/docs/logo.svg"}]],
 
   // 主页小标题
   title: "陳序源个人文档库",
