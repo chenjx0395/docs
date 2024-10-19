@@ -35,6 +35,9 @@ export default defineConfig({
       { text: '图书', items:[
         { text: '《图解TCP/IP》', link: '/book/图解TCP_IP'},
       ]},
+      { text: '其他&教程', items:[
+        { text: 'VitePress建站教程', link: '/other/VitePress建立文档网站.md'},
+      ]},
     ],
 
     // 右侧导航栏设置
