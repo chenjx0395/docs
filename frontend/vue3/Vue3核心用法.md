@@ -461,3 +461,176 @@ ref其实也可以创建对象类型，其原理还是调用了reactive方法。
 > 1. 若需要一个基本类型的响应式数据，必须使用`ref`。
 > 2. 若需要一个响应式对象，层级不深，`ref`、`reactive`都可以。
 > 3. 若需要一个响应式对象，且层级较深，推荐使用`reactive`。
+
+## 2.4 toRefs 与 toRef
+
+* 这两个东西为了解决什么问题？
+
+> **场景**：定义了一个对象类型的响应式数据。如student。含name，age等属性。我使用解构表达式提取中name，age两个变量。所以，此时的name，age变量放在模板中还具有响应式数据的特点吗？
+>
+> **直接说**：没有，打印name，发现它成为了一个普通的基本类型数据。那么怎么解决呢？
+>
+> **答案**：使用toRefs，或者toRef函数。获取其返回值，即为响应式数据。不信可以打印其返回值观察
+
+* `toRefs` 和 `toRef` 有什么区别
+
+> **相同点**：用都是将响应式对象中的属性转换成`ref`对象
+>
+> **不同点**：`toRefs`是批量转换，转换出的是一个包含所有属性的对象。`toRef`是转换一个，需指定属性名
+
+* 怎么用？
+
+  `let {name,age} = toRefs(student)`
+
+  `let age2 = toRef(student,'age')`
+
+  直接看代码
+
+  ```vue
+  
+  <template>
+    <div class="Person">
+      <h2>学生名字：{{ student.name }}</h2>
+      <h2>学生年龄：{{ student.age }}</h2>
+      <button @click="changeAge">年龄+1</button>
+      <br>
+      <h2>学生名字：{{ name }}</h2>
+      <h2>学生年龄：{{ age }}</h2>
+      <br>
+      <h2>学生年龄：{{ age2 }}</h2>
+    </div>
+  
+  </template>
+  
+  <script  setup lang="ts" >
+  import { log } from "console";
+  import { reactive, toRef, toRefs } from "vue";
+  
+    let student = reactive({
+      name: "坤哥",
+      age: 2.5
+    })
+    // let {name,age} = student
+    let {name,age} = toRefs(student)
+    console.log(name);
+    console.log(age);
+      
+     
+    let age2 = toRef(student,'age')
+    
+  
+    function changeAge(){
+      student.age += 1
+    }
+  
+  
+  </script>
+  
+  <style scoped>
+  .Person {
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #f77234;
+  }
+  </style>
+  ```
+
+  
+
+## 2.5 computed
+
+* `computed`有什么用？
+
+  > **场景**：两个输入框，一个姓，一个名。最后拼起来展示其全名。很简单吧，库库操作后，大概率使用两个变量记录姓和名，最后在展示全名时利用`{{}}`来展示。
+  >
+  > **需求升级**：但如果我要姓的第一个字母必须大写呢？那马上就头大了，可能是要在`{{}}`中搞一堆的操作，取第一个字符，转换大写，再去除第一个字符的其他部分，最后再拼写出来。这是不是在`{{}}`中搞得太复杂了呢😂。
+  >
+  > **所以**：你可以利用computed来将刚刚的复杂逻辑放入computed函数形参中作为返回值。再把返回值拿去用。
+  >
+  > **tips**：Vue3中computed以函数的形式使用。Vue2中是一个选项
+
+* `computed`怎么用？
+
+  > 1. 把你的计算OR关于数据的业务逻辑写在computed函数形参中
+  > 2. 把最后结果返回
+  > 3. 使用一个变量接收。此结果会根据computed中所依赖的数据变化而变化。且有缓存特点，可以说：一次计算，处处使用。（当然，前提是所依据的数据没变化）
+
+  `let fullName = computed(()=> {
+      return firstName.value.slice(0,1).toUpperCase() + firstName.value.slice(1)+'-'+lastName.value
+    })`
+
+* 参考代码
+
+  ```vue
+  
+  <template>
+    <div class="Person">
+      <h2>姓：{{ firstName }}</h2>
+      <h2>名：{{ lastName }}</h2>
+       <!-- <h2>姓名：{{ firstName + '--' + lastName }}</h2> -->
+       <!-- 现在改成首字母大写 -->
+      <!-- <h2>姓名：{{ firstName.slice(0,1).toUpperCase() + firstName.slice(1) + '-' + lastName }}</h2> -->
+      <!-- computed解决 -->
+       <h2>姓名：{{ fullName }}</h2>
+  
+  
+    </div>
+  
+  </template>
+  
+  <script  setup lang="ts" >
+  import { log } from "console";
+  import { computed, reactive, ref, toRef, toRefs } from "vue";
+  
+    let firstName = ref('cai')
+    let lastName = ref('xukun')
+  
+    // 使用computed计算属性
+    let fullName = computed(()=> {
+      return firstName.value.slice(0,1).toUpperCase() + firstName.value.slice(1)+'-'+lastName.value
+    })
+    console.log(fullName);
+  
+  </script>
+  
+  <style scoped>
+  .Person {
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #f77234;
+  }
+  </style>
+  ```
+
+  * computed 返回的变量是只读的
+
+    > **怎么理解？**
+    >
+    > 意思是返回的变量是无法通过赋值的方式来改变。只能通过其依据的变量改变而改变。
+    >
+    > **怎么让其可读？**
+    >
+    > ```vue
+    > <script lang="ts" setup name="Person">
+    >     // fullName是一个计算属性，可读可写
+    >   	let fullName = computed({
+    >     // 当fullName被读取时，get调用
+    >     get(){
+    >       return firstName.value.slice(0,1).toUpperCase() + firstName.value.slice(1) + '-' + lastName.value
+    >     },
+    >     // 当fullName被修改时，set调用，且会收到修改的值
+    >     set(val){
+    >       const [str1,str2] = val.split('-')
+    >       firstName.value = str1
+    >       lastName.value = str2
+    >     }
+    >   })
+    > </script>
+    > ```
+    >
+    > 
+
+
+
