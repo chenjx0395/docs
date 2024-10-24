@@ -32,6 +32,9 @@ export default defineConfig({
         { text: 'Java核心语法', link: '/backend/java_basic'},
         { text: 'MySQL', link: '/backend/mysql'},
       ]},
+      { text: '鸿蒙', items:[
+        { text: '鸿蒙案例', link: '/harmony/cases'},
+      ]},
       { text: '图书', items:[
         { text: '《图解TCP/IP》', link: '/book/图解TCP_IP'},
       ]},
@@ -72,6 +75,7 @@ export default defineConfig({
       "/backend/java_basic": set_sidebar("/backend/java_basic"), 
       "/backend/mysql": set_sidebar("/backend/mysql"), 
       "/book/图解TCP_IP": set_sidebar("/book/图解TCP_IP"), 
+      "/harmony/cases": set_sidebar("/harmony/cases"), 
     },
 
 
