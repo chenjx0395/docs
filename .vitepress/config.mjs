@@ -33,6 +33,7 @@ export default defineConfig({
         { text: 'MySQL', link: '/backend/mysql'},
       ]},
       { text: '前端', items:[
+        { text: 'HTML', link: '/frontend/HTML'},
         { text: 'Vue', link: '/frontend/vue3'},
       ]},
       { text: '鸿蒙', items:[
@@ -79,6 +80,7 @@ export default defineConfig({
       "/backend/mysql": set_sidebar("/backend/mysql"), 
       "/book/图解TCP_IP": set_sidebar("/book/图解TCP_IP"), 
       "/frontend/vue3": set_sidebar("/frontend/vue3"), 
+      "/frontend/HTML": set_sidebar("/frontend/HTML"), 
       "/harmony/cases": set_sidebar("/harmony/cases"), 
     },
 
